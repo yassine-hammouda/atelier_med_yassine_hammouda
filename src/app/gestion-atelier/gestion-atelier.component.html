@@ -1,0 +1,56 @@
+<div>
+  <h2>Gestion des Ateliers - {{ infoEtudiant }}</h2>
+
+  <form [formGroup]="atelierForm" (ngSubmit)="valider()">
+    <div>
+      <input type="text" formControlName="nom" placeholder="Nom">
+    </div>
+
+    <div>
+      <input type="text" formControlName="gmailFormateur" placeholder="Gmail">
+    </div>
+
+    <div>
+      <input type="number" formControlName="nbParticipant" placeholder="Participants">
+    </div>
+
+    <div>
+      <label>
+        <input type="checkbox" formControlName="statut"> Statut par défaut (Vrai)
+      </label>
+    </div>
+
+    <button type="submit" [disabled]="atelierForm.invalid">
+      {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
+    </button>
+    <button type="button" *ngIf="isEditMode" (click)="isEditMode = false; atelierForm.reset({statut:true})">Annuler</button>
+  </form>
+
+  <hr>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Gmail</th>
+        <th>Participants</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of listeAteliers">
+        <td>{{ a.id }}</td>
+        <td>{{ a.nom }}</td>
+        <td>{{ a.gmailFormateur }}</td>
+        <td>{{ a.nbParticipant }}</td>
+        <td>{{ a.statut ? 'Vrai' : 'Faux' }}</td>
+        <td>
+          <button (click)="modifier(a)">Modifier</button>
+          <button (click)="supprimer(a.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
